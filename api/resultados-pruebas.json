@@ -1,0 +1,180 @@
+{
+  "fecha": "2026-11-24T22:15:34.854Z",
+  "resultados": [
+    {
+      "id": "API-01",
+      "descripcion": "Login de administrador con credenciales válidas",
+      "esperado": "200 y token JWT",
+      "obtenido": "200, JWT de 3 partes, rol admin",
+      "ok": true
+    },
+    {
+      "id": "API-02",
+      "descripcion": "Login con contraseña incorrecta",
+      "esperado": "401 Credenciales incorrectas",
+      "obtenido": "401 \"Credenciales incorrectas\"",
+      "ok": true
+    },
+    {
+      "id": "API-03",
+      "descripcion": "Login de profesor y estudiante",
+      "esperado": "200 en ambos",
+      "obtenido": "200 (profesor), 200 (estudiante)",
+      "ok": true
+    },
+    {
+      "id": "API-04",
+      "descripcion": "GET /cursos sin token",
+      "esperado": "401",
+      "obtenido": "401 \"Se requiere un token de acceso\"",
+      "ok": true
+    },
+    {
+      "id": "API-05",
+      "descripcion": "GET /cursos con token manipulado",
+      "esperado": "401 firma inválida",
+      "obtenido": "401 \"Firma del token inválida\"",
+      "ok": true
+    },
+    {
+      "id": "API-06",
+      "descripcion": "GET /cursos como administrador",
+      "esperado": "200 con 4 cursos",
+      "obtenido": "200, 4 cursos",
+      "ok": true
+    },
+    {
+      "id": "API-07",
+      "descripcion": "GET /cursos como estudiante (solo activos)",
+      "esperado": "200 con 3 cursos",
+      "obtenido": "200, 3 cursos activos",
+      "ok": true
+    },
+    {
+      "id": "API-08",
+      "descripcion": "POST /cursos como administrador",
+      "esperado": "201 curso creado",
+      "obtenido": "201, id 5, profesor Carlos Ramírez",
+      "ok": true
+    },
+    {
+      "id": "API-09",
+      "descripcion": "POST /cursos con datos inválidos",
+      "esperado": "400 con errores por campo",
+      "obtenido": "400, campos: codigo, nombre, creditos, horas, cupos, estado, profesorId",
+      "ok": true
+    },
+    {
+      "id": "API-10",
+      "descripcion": "POST /cursos con código duplicado",
+      "esperado": "409",
+      "obtenido": "409 \"Ya existe un curso con ese código\"",
+      "ok": true
+    },
+    {
+      "id": "API-11",
+      "descripcion": "PUT /cursos/:id como profesor dueño",
+      "esperado": "200 curso actualizado",
+      "obtenido": "200, nombre \"Desarrollo Web Avanzado II\"",
+      "ok": true
+    },
+    {
+      "id": "API-12",
+      "descripcion": "PUT /cursos/2 como profesor que no es dueño",
+      "esperado": "403",
+      "obtenido": "403 \"Solo puedes editar tus propios cursos\"",
+      "ok": true
+    },
+    {
+      "id": "API-13",
+      "descripcion": "POST /cursos como estudiante",
+      "esperado": "403",
+      "obtenido": "403 \"Acceso denegado: se requiere rol admin o profesor\"",
+      "ok": true
+    },
+    {
+      "id": "API-14",
+      "descripcion": "Inscripción de estudiante en curso nuevo",
+      "esperado": "201 y luego 409",
+      "obtenido": "201 inscrito; repetir: 409",
+      "ok": true
+    },
+    {
+      "id": "API-15",
+      "descripcion": "GET /usuarios como profesor",
+      "esperado": "403 (solo admin)",
+      "obtenido": "403 \"Acceso denegado: se requiere rol admin\"",
+      "ok": true
+    },
+    {
+      "id": "API-16",
+      "descripcion": "GET /usuarios como administrador (sin contraseñas)",
+      "esperado": "200 con 6 usuarios",
+      "obtenido": "200, 6 usuarios, sin hash: true",
+      "ok": true
+    },
+    {
+      "id": "API-17",
+      "descripcion": "POST /usuarios (crear estudiante)",
+      "esperado": "201",
+      "obtenido": "201, id 7",
+      "ok": true
+    },
+    {
+      "id": "API-18",
+      "descripcion": "POST /usuarios con correo repetido",
+      "esperado": "409",
+      "obtenido": "409 \"Ya existe un usuario con ese correo\"",
+      "ok": true
+    },
+    {
+      "id": "API-19",
+      "descripcion": "PUT /usuarios/:id (cambiar a profesor)",
+      "esperado": "200",
+      "obtenido": "200, rol profesor",
+      "ok": true
+    },
+    {
+      "id": "API-20",
+      "descripcion": "Login del usuario creado",
+      "esperado": "200",
+      "obtenido": "200, rol profesor",
+      "ok": true
+    },
+    {
+      "id": "API-21",
+      "descripcion": "DELETE /usuarios/:id",
+      "esperado": "204 y luego 404",
+      "obtenido": "204; luego GET: 404",
+      "ok": true
+    },
+    {
+      "id": "API-22",
+      "descripcion": "DELETE /usuarios/1 (el admin a sí mismo)",
+      "esperado": "400",
+      "obtenido": "400 \"No puedes eliminar tu propia cuenta\"",
+      "ok": true
+    },
+    {
+      "id": "API-23",
+      "descripcion": "DELETE /cursos/:id como administrador",
+      "esperado": "204 y luego 404",
+      "obtenido": "204; luego GET: 404",
+      "ok": true
+    },
+    {
+      "id": "API-24",
+      "descripcion": "GET /estadisticas según rol",
+      "esperado": "Datos distintos por rol",
+      "obtenido": "admin: 6 usuarios; profesor: 2 cursos; estudiante: 2 inscritos",
+      "ok": true
+    },
+    {
+      "id": "API-25",
+      "descripcion": "Token expirado (vida de 3 s)",
+      "esperado": "401 Token expirado",
+      "obtenido": "401 \"Token expirado\"",
+      "ok": true
+    }
+  ]
+}

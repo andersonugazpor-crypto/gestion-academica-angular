@@ -1,0 +1,75 @@
+<div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+  <div>
+    <h1 class="h3 mb-0">Usuarios</h1>
+    <span class="text-secondary small">Administradores, profesores y estudiantes del sistema</span>
+  </div>
+  <a class="btn btn-primary" routerLink="nuevo"><i class="bi bi-person-plus"></i> Nuevo usuario</a>
+</div>
+
+<div class="card ga-card">
+  <div class="card-body border-bottom d-flex flex-wrap gap-2">
+    <div class="input-group" style="max-width: 360px">
+      <span class="input-group-text"><i class="bi bi-search"></i></span>
+      <input class="form-control" placeholder="Buscar por nombre o correo" [(ngModel)]="busqueda" aria-label="Buscar">
+    </div>
+    <select class="form-select" style="max-width: 200px" [(ngModel)]="filtroRol" aria-label="Filtrar por rol">
+      <option value="">Todos los roles</option>
+      @for (r of roles; track r) {
+        <option [value]="r">{{ r | rol }}</option>
+      }
+    </select>
+  </div>
+
+  @if (usuarios$ | async; as usuarios) {
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Usuario</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Estado</th>
+            <th>Registrado</th>
+            <th class="text-end">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (u of usuarios | filtroTexto: busqueda : camposBusqueda; track u.id) {
+            <tr appResaltar>
+              <td>
+                <div class="d-flex align-items-center gap-2">
+                  <span class="ga-avatar" [class]="'bg-' + (u.rol | rol: 'color')">{{ u.nombre | iniciales }}</span>
+                  <span class="fw-semibold">{{ u.nombre }}</span>
+                  @if (u.id === idActual) { <span class="badge text-bg-light">Tú</span> }
+                </div>
+              </td>
+              <td>{{ u.email }}</td>
+              <td><span class="badge" [class]="'text-bg-' + (u.rol | rol: 'color')">{{ u.rol | rol }}</span></td>
+              <td>
+                @if (u.activo) {
+                  <span class="text-success"><i class="bi bi-circle-fill small"></i> Activo</span>
+                } @else {
+                  <span class="text-secondary"><i class="bi bi-circle small"></i> Inactivo</span>
+                }
+              </td>
+              <td>{{ u.creadoEn | date: 'dd/MM/yyyy' }}</td>
+              <td class="text-end text-nowrap">
+                <a class="btn btn-sm btn-outline-primary" [routerLink]="[u.id, 'editar']" title="Editar">
+                  <i class="bi bi-pencil"></i>
+                </a>
+                <button class="btn btn-sm btn-outline-danger ms-1" type="button" title="Eliminar"
+                        [disabled]="u.id === idActual || eliminandoId === u.id" (click)="eliminar(u)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="6" class="text-center text-secondary py-4">No se encontraron usuarios.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else {
+    <div class="p-4 text-center text-secondary"><span class="spinner-border spinner-border-sm"></span> Cargando usuarios...</div>
+  }
+</div>

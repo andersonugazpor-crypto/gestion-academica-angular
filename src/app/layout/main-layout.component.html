@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+  <div class="container-fluid">
+    <button class="btn btn-outline-secondary d-lg-none me-2" type="button" (click)="menuAbierto = !menuAbierto"
+            aria-label="Abrir menú">
+      <i class="bi bi-list"></i>
+    </button>
+    <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" routerLink="/dashboard">
+      <img src="favicon.svg" alt="" width="28" height="28">
+      Gestión Académica
+    </a>
+
+    @if (usuario$ | async; as usuario) {
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <div class="text-end d-none d-sm-block lh-sm">
+          <div class="fw-semibold">{{ usuario.nombre }}</div>
+          <span class="badge" [class]="'text-bg-' + (usuario.rol | rol: 'color')">{{ usuario.rol | rol }}</span>
+        </div>
+        <span class="ga-avatar">{{ usuario.nombre | iniciales }}</span>
+        <button class="btn btn-outline-danger btn-sm" type="button" (click)="salir()">
+          <i class="bi bi-box-arrow-right"></i> Salir
+        </button>
+      </div>
+    }
+  </div>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <aside class="col-lg-2 bg-white border-end p-3 min-vh-100 d-lg-block" [class.d-none]="!menuAbierto">
+      <ul class="nav nav-pills flex-column gap-1">
+        @for (opcion of menu; track opcion.ruta) {
+          <li class="nav-item" *appTieneRol="opcion.roles">
+            <a class="nav-link" [routerLink]="opcion.ruta" routerLinkActive="active"
+               [routerLinkActiveOptions]="{ exact: true }" (click)="menuAbierto = false">
+              <i class="bi me-2" [class]="opcion.icono"></i>{{ opcion.etiqueta }}
+            </a>
+          </li>
+        }
+      </ul>
+    </aside>
+
+    <main class="col-lg-10 p-4">
+      <!-- Aquí se cargan las rutas hijas: dashboard, cursos, usuarios... -->
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

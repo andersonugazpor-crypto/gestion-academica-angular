@@ -1,0 +1,35 @@
+{
+  "name": "gestion-academica-angular",
+  "version": "1.0.0",
+  "description": "SPA en Angular para la gestión de cursos y usuarios con autenticación JWT, guards por rol y consumo de API REST.",
+  "author": "Anderson Ugaz",
+  "private": true,
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve -o",
+    "api": "node api/server.js",
+    "api:reset": "node api/server.js --reset",
+    "dev": "node scripts/dev.js",
+    "build": "ng build",
+    "test:api": "node api/pruebas-api.js"
+  },
+  "dependencies": {
+    "@angular/common": "^20.3.0",
+    "@angular/compiler": "^20.3.0",
+    "@angular/core": "^20.3.0",
+    "@angular/forms": "^20.3.0",
+    "@angular/platform-browser": "^20.3.0",
+    "@angular/router": "^20.3.0",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.6.0",
+    "zone.js": "~0.15.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^20.3.0",
+    "@angular/cli": "^20.3.0",
+    "@angular/compiler-cli": "^20.3.0",
+    "typescript": "~5.8.2"
+  }
+}

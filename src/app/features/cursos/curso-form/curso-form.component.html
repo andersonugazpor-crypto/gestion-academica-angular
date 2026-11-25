@@ -1,0 +1,88 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/cursos">Cursos</a></li>
+    <li class="breadcrumb-item active">{{ titulo }}</li>
+  </ol>
+</nav>
+
+<div class="card ga-card" style="max-width: 860px">
+  <div class="card-body p-4">
+    <h1 class="h4 mb-4">{{ titulo }}</h1>
+
+    @if (cargando) {
+      <div class="text-secondary"><span class="spinner-border spinner-border-sm"></span> Cargando curso...</div>
+    } @else {
+      <form [formGroup]="formulario" (ngSubmit)="guardar()" novalidate>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <label class="form-label" for="codigo">Código</label>
+            <input id="codigo" class="form-control text-uppercase" formControlName="codigo" placeholder="WEB-301"
+                   appAutofocus [class.is-invalid]="invalido('codigo')">
+            <div class="invalid-feedback">{{ mensaje('codigo') }}</div>
+          </div>
+          <div class="col-md-8">
+            <label class="form-label" for="nombre">Nombre del curso</label>
+            <input id="nombre" class="form-control" formControlName="nombre" [class.is-invalid]="invalido('nombre')">
+            <div class="invalid-feedback">{{ mensaje('nombre') }}</div>
+          </div>
+          <div class="col-12">
+            <label class="form-label" for="descripcion">Descripción</label>
+            <textarea id="descripcion" rows="3" class="form-control" formControlName="descripcion"
+                      [class.is-invalid]="invalido('descripcion')"></textarea>
+            <div class="invalid-feedback">{{ mensaje('descripcion') }}</div>
+          </div>
+          <div class="col-sm-4">
+            <label class="form-label" for="creditos">Créditos</label>
+            <input id="creditos" type="number" class="form-control" formControlName="creditos"
+                   [class.is-invalid]="invalido('creditos')">
+            <div class="invalid-feedback">{{ mensaje('creditos') }}</div>
+          </div>
+          <div class="col-sm-4">
+            <label class="form-label" for="horas">Horas</label>
+            <input id="horas" type="number" class="form-control" formControlName="horas"
+                   [class.is-invalid]="invalido('horas')">
+            <div class="invalid-feedback">{{ mensaje('horas') }}</div>
+          </div>
+          <div class="col-sm-4">
+            <label class="form-label" for="cupos">Cupos</label>
+            <input id="cupos" type="number" class="form-control" formControlName="cupos"
+                   [class.is-invalid]="invalido('cupos')">
+            <div class="invalid-feedback">{{ mensaje('cupos') }}</div>
+          </div>
+          <div class="col-sm-6">
+            <label class="form-label" for="estado">Estado</label>
+            <select id="estado" class="form-select" formControlName="estado">
+              <option value="ACTIVO">Activo</option>
+              <option value="INACTIVO">Inactivo</option>
+            </select>
+          </div>
+          @if (esAdmin) {
+            <div class="col-sm-6">
+              <label class="form-label" for="profesorId">Profesor a cargo</label>
+              <select id="profesorId" class="form-select" formControlName="profesorId"
+                      [class.is-invalid]="invalido('profesorId')">
+                <option [ngValue]="null" disabled>Selecciona un profesor</option>
+                @for (p of profesores; track p.id) {
+                  <option [ngValue]="p.id">{{ p.nombre }}</option>
+                }
+              </select>
+              <div class="invalid-feedback">{{ mensaje('profesorId') }}</div>
+            </div>
+          } @else {
+            <div class="col-sm-6 d-flex align-items-end">
+              <p class="text-secondary small mb-2"><i class="bi bi-info-circle"></i> El curso queda asignado a tu nombre.</p>
+            </div>
+          }
+        </div>
+
+        <div class="d-flex gap-2 mt-4">
+          <button type="submit" class="btn btn-primary" [disabled]="guardando">
+            @if (guardando) { <span class="spinner-border spinner-border-sm me-1"></span> }
+            <i class="bi bi-save"></i> Guardar
+          </button>
+          <a class="btn btn-outline-secondary" routerLink="/cursos">Cancelar</a>
+        </div>
+      </form>
+    }
+  </div>
+</div>

@@ -1,0 +1,122 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Ana Torres",
+      "email": "admin@idat.edu.pe",
+      "rol": "admin",
+      "activo": true,
+      "salt": "06290f09c3a363ab",
+      "passwordHash": "ac7027bd252a39d62e3ad6f0277931722d43394ca414fbbc168df0b1ed3099c1",
+      "creadoEn": "2026-11-01T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "nombre": "Carlos Ramírez",
+      "email": "profesor@idat.edu.pe",
+      "rol": "profesor",
+      "activo": true,
+      "salt": "855279177e1dc33e",
+      "passwordHash": "e0db92012b27bdc103de3754df1eb8d6e2bf7b5a741d7f4ef2b63920007fd4b0",
+      "creadoEn": "2026-11-01T10:00:00.000Z"
+    },
+    {
+      "id": 3,
+      "nombre": "Lucía Fernández",
+      "email": "lfernandez@idat.edu.pe",
+      "rol": "profesor",
+      "activo": true,
+      "salt": "ac58c08754e72d96",
+      "passwordHash": "3a9ca7ef3ef1f712c5b3c01180cc6b61530b3ef00e9045552e7ba940b52ccebb",
+      "creadoEn": "2026-11-01T10:00:00.000Z"
+    },
+    {
+      "id": 4,
+      "nombre": "Anderson Ugaz",
+      "email": "estudiante@idat.edu.pe",
+      "rol": "estudiante",
+      "activo": true,
+      "salt": "1809f85fe75a8b41",
+      "passwordHash": "82a7b363e73e988eaf53265f6d420d476a5c325351a6e5b9e3c7b2b35033d34d",
+      "creadoEn": "2026-11-01T10:00:00.000Z"
+    },
+    {
+      "id": 5,
+      "nombre": "María Quispe",
+      "email": "mquispe@idat.edu.pe",
+      "rol": "estudiante",
+      "activo": true,
+      "salt": "b9c13cad2156289b",
+      "passwordHash": "0a746c114553c5347bfd5580742d9a0605660b701233fb84edeb10e75faca78a",
+      "creadoEn": "2026-11-01T10:00:00.000Z"
+    },
+    {
+      "id": 6,
+      "nombre": "Jorge Salas",
+      "email": "jsalas@idat.edu.pe",
+      "rol": "estudiante",
+      "activo": true,
+      "salt": "01c4ff824e0064c1",
+      "passwordHash": "89b9cedf521e3901ef02464c87e61a915e084fc975e4b42b2cfdd136a55b149a",
+      "creadoEn": "2026-11-01T10:00:00.000Z"
+    }
+  ],
+  "cursos": [
+    {
+      "id": 1,
+      "codigo": "DI3-101",
+      "nombre": "Desarrollo de Interfaces 3",
+      "descripcion": "Angular, enrutamiento, guards y consumo de APIs REST con JWT.",
+      "creditos": 4,
+      "horas": 64,
+      "profesorId": 2,
+      "estado": "ACTIVO",
+      "cupos": 30,
+      "estudiantes": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": 2,
+      "codigo": "PDS-201",
+      "nombre": "Patrones de Diseño de Software",
+      "descripcion": "Patrones creacionales, estructurales y de comportamiento aplicados a Java.",
+      "creditos": 4,
+      "horas": 64,
+      "profesorId": 3,
+      "estado": "ACTIVO",
+      "cupos": 25,
+      "estudiantes": [
+        4
+      ]
+    },
+    {
+      "id": 3,
+      "codigo": "BD-110",
+      "nombre": "Base de Datos Relacionales",
+      "descripcion": "Modelado entidad-relación, SQL y normalización.",
+      "creditos": 3,
+      "horas": 48,
+      "profesorId": 2,
+      "estado": "ACTIVO",
+      "cupos": 35,
+      "estudiantes": [
+        5,
+        6
+      ]
+    },
+    {
+      "id": 4,
+      "codigo": "ALG-090",
+      "nombre": "Algoritmos y Estructuras de Datos",
+      "descripcion": "Complejidad, listas, árboles y grafos.",
+      "creditos": 3,
+      "horas": 48,
+      "profesorId": 3,
+      "estado": "INACTIVO",
+      "cupos": 30,
+      "estudiantes": []
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+# Dependencias y compilados
+/node_modules
+/dist
+/out-tsc
+/.angular
+
+# Datos de la API simulada (se regeneran desde api/db.seed.json)
+/api/db.json
+
+# Editores y sistema
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+npm-debug.log*

@@ -1,0 +1,75 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/cursos">Cursos</a></li>
+    <li class="breadcrumb-item active">Detalle</li>
+  </ol>
+</nav>
+
+@if (curso$ | async; as curso) {
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="card ga-card h-100">
+        <div class="card-body p-4">
+          <div class="d-flex flex-wrap justify-content-between gap-2 mb-2">
+            <code class="fs-6">{{ curso.codigo }}</code>
+            <span class="badge" [class]="curso.estado === 'ACTIVO' ? 'text-bg-success' : 'text-bg-secondary'">
+              {{ curso.estado | titlecase }}
+            </span>
+          </div>
+          <h1 class="h3">{{ curso.nombre }}</h1>
+          <p class="text-secondary">{{ curso.descripcion || 'Sin descripción.' }}</p>
+
+          <dl class="row mb-0">
+            <dt class="col-sm-4">Profesor</dt><dd class="col-sm-8">{{ curso.profesorNombre ?? '—' }}</dd>
+            <dt class="col-sm-4">Créditos</dt><dd class="col-sm-8">{{ curso.creditos | creditos }}</dd>
+            <dt class="col-sm-4">Horas</dt><dd class="col-sm-8">{{ curso.horas }} h</dd>
+            <dt class="col-sm-4">Inscritos</dt><dd class="col-sm-8">{{ curso.inscritos }} de {{ curso.cupos }} cupos</dd>
+          </dl>
+
+          <div class="progress mt-3" role="progressbar" [attr.aria-valuenow]="curso.inscritos"
+               aria-valuemin="0" [attr.aria-valuemax]="curso.cupos" style="height: 8px">
+            <div class="progress-bar" [style.width.%]="(curso.inscritos / curso.cupos) * 100"></div>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            @if (puedeEditar(curso)) {
+              <a class="btn btn-primary" [routerLink]="['/cursos', curso.id, 'editar']">
+                <i class="bi bi-pencil"></i> Editar
+              </a>
+            }
+            <button *appTieneRol="'estudiante'" type="button" class="btn"
+                    [class]="curso.inscrito ? 'btn-outline-warning' : 'btn-success'"
+                    [disabled]="procesando || (!curso.inscrito && curso.inscritos >= curso.cupos)"
+                    (click)="alternarInscripcion(curso)">
+              {{ curso.inscrito ? 'Anular inscripción' : 'Inscribirme' }}
+            </button>
+            <a class="btn btn-outline-secondary" routerLink="/cursos">Volver</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    @if (curso.listaEstudiantes) {
+      <div class="col-lg-4">
+        <div class="card ga-card h-100">
+          <div class="card-header bg-white"><strong>Estudiantes inscritos</strong></div>
+          <ul class="list-group list-group-flush">
+            @for (e of curso.listaEstudiantes; track e.id) {
+              <li class="list-group-item d-flex align-items-center gap-2" appResaltar>
+                <span class="ga-avatar bg-success">{{ e.nombre | iniciales }}</span>
+                <div class="lh-sm">
+                  <div>{{ e.nombre }}</div>
+                  <small class="text-secondary">{{ e.email }}</small>
+                </div>
+              </li>
+            } @empty {
+              <li class="list-group-item text-secondary">Aún no hay estudiantes inscritos.</li>
+            }
+          </ul>
+        </div>
+      </div>
+    }
+  </div>
+} @else {
+  <div class="text-secondary"><span class="spinner-border spinner-border-sm"></span> Cargando curso...</div>
+}
